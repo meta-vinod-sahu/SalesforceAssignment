@@ -1,4 +1,9 @@
 global class SendEmailToOpptyOwner implements Database.Batchable<SObject> {
+
+   /**
+     * Question: Create a schedular to mail an opportunity owner if not modified last 30 days
+     */
+
     global Database.QueryLocator start(Database.BatchableContext Bc){
         return Database.getQueryLocator([Select Id,ownerID from Opportunity where LastModifiedDate = LAST_N_DAYS:30]);
     }
