@@ -1,11 +1,11 @@
-public class ApexAssignment{
+public class ApexAssignment
+{
     /**
      * Question: Create A Class & a static Function which takes 
      * classId as argument and returns all names of student in that 
      * class as a list
      * classId: 
      * return
-     * 
      * */
     public static List<String> getStudentNamesByClassId(String classId){
         List<Student__C> students = [Select Id, Name, Class__c From Student__C 
@@ -22,19 +22,18 @@ public class ApexAssignment{
      * key is class and value is set of StudentId in it
      * return map where key is class Id & Value Contains Set of StudentIds
      * enrolled in that class
-     * 
      * */
-    public static Map<String,Set<String>> getClassWiseMapOfStudents(){
+    public static Map<Class__C,Set<Id>> getClassWiseMapOfStudents(){
         List<Class__C> classes = [Select Id, Name, (Select Id, Name From Students__r) From Class__c];
-        Map<String, Set<String>> classWiseMapOfStudents = new Map<String, Set<String>>();
+        Map<Class__C, Set<Id>> classWiseMapOfStudents = new Map<Class__C, Set<Id>>();
         for(Class__C currentClass: classes){
             String classId = currentClass.Id;
             List<Student__c> students = currentClass.students__r;
-            Set<String> studentIds = new Set<String>(); 
+            Set<Id> studentIds = new Set<Id>(); 
             for(Student__c student: students){
                 studentIds.add(student.Id);
             }
-            classWiseMapOfStudents.put(classId, studentIds);
+            classWiseMapOfStudents.put(currentClass, studentIds);
         }
         return classWiseMapOfStudents;
     }
