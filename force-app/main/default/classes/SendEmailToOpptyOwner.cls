@@ -10,8 +10,8 @@ global class SendEmailToOpptyOwner implements Database.Batchable<SObject> {
 
     global void execute(Database.BatchableContext BC, List<Opportunity > scope){
      for(Opportunity s : scope){
-       EmailSendManager em = new EmailSendManager();
-         em.sendMail(s.email__c, 'Notify for modification','Please modify');
+       EmailManager em = new EmailManager();
+         em.sendMail('vinod.sahu@metacube.com', 'Notify for modification','Please modify');
      }
    }
     global void finish(Database.BatchableContext Bc){
