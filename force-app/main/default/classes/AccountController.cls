@@ -44,7 +44,7 @@ public class AccountController {
         setCon = null;
     }
     
-    public List<SObject> getAccounts() {
+    public List<Account> getAccounts() {
         query = 'select Name , BillingCity , BillingState ,BillingCountry FROM Account ';
         if(!String.isBlank(city) || !String.isBlank(state) || !String.isBlank(country)) {
             query+='WHERE' ;
@@ -59,7 +59,7 @@ public class AccountController {
         state = null;
         country = null;
         resultSize = setCon.getResultSize();
-        return  setCon.getRecords();
+        return (List<Account>) setCon.getRecords();
     }
     
 
