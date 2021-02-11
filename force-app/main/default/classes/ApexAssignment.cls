@@ -7,9 +7,9 @@ public class ApexAssignment
      * classId: 
      * return
      * */
-    public static List<String> getStudentNamesByClassId(Set<String> classId){
+    public static List<String> getStudentNamesByClassId(String classId){
         List<Student__C> students = [Select Id, Name, Class__c From Student__C 
-                                     WHERE Class__c in (SELECT ID From Class__c Where Id in  (:classId))];
+                                     WHERE Class__c in (SELECT ID From Class__c Where Id = :classId)];
         List<String> studentNames = new List<String>();
         for (Student__c student : students){
             studentNames.add(student.Name);
@@ -47,16 +47,11 @@ public class ApexAssignment
      * return count of working days
      * */
     public static Integer countWorkingDays(Date startDate, Date endDate){
-        Date fromDate = Date.valueOf(startDate);
-        Date toDate = Date.valueOf(endDate);
+        Date toDate = Date.valueOf(startDate);
+        Date fromDate = Date.valueOf(endDate);
         Integer workingDays = 0;
-        if (startDate>toDate) {
-            System.debug('start date must be less than to end date');
-        }
-       
-        for(DateTime index = fromDate ; index <= toDate ; index = index.addDays(1)){
-            
-            if(index.format('EEEE') != 'Saturday' && index.format('EEEE') != 'Sunday') {
+        for(DateTime index = toDate ; index <= fromDate ; index = index.addDays(1)){
+			if(index.format('EEEE') != 'Saturday' && index.format('EEEE') != 'Sunday') {
 					workingDays++;
 			}
 		}
