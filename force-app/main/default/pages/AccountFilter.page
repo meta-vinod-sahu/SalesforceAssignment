@@ -1,0 +1,41 @@
+<apex:page controller="AccountController" tabStyle="Account">
+    <apex:form >
+        <apex:pageBlock title="Account Search" id="main-block">
+            <apex:pageBlockSection columns="2">
+                <apex:inputText value="{! noOfRecords}" label="Number of Accounts to show " />
+                <apex:inputText value="{!city}" label="Billing City" />
+                <apex:inputText value="{!state}" label="Billing State "/>
+                <apex:inputText value="{!country}" label="Billing Country "/>
+            </apex:pageBlockSection>
+            
+            <apex:pageBlockButtons location="Top">
+                <apex:commandButton value="Search" action="{!searchAccounts}"  rerender="main-block"/>
+            </apex:pageBlockButtons>
+            <apex:pageBlock id="accsTable">
+                <apex:pageBlockTable value="{!Accounts}" var="ac" >
+                    <apex:column value="{!ac.Name}"/>
+                    <apex:column value="{!ac.BillingCity}"/>
+                    <apex:column value="{!ac.BillingState}"/>
+                    <apex:column value="{!ac.BillingCountry}"/>
+                </apex:pageBlockTable>
+                <apex:outputText >{!(setCon.pageNumber)} of {! CEILING(ResultSize / setCon.pageSize) }
+                </apex:outputText>      
+                <apex:pageBlockSection >
+                    <apex:panelGrid columns="8">
+                        <apex:commandLink reRender="accsTable" value="First" action="{!setCon.first}"  rendered="{!setCon.hasPrevious}" />
+                        <apex:commandLink reRender="accsTable" value="Previous" action="{!setCon.previous}" rendered="{!setCon.hasPrevious}" title="Previous Page"/>
+                        <apex:commandLink reRender="accsTable" value="Next" action="{!setCon.next}" rendered="{!setCon.hasNext}" title="Next Page"/> 
+                        <apex:commandLink reRender="accsTable" value="Last" action="{!setCon.last}"  title="Last Page" rendered="{!setCon.hasNext}"/> 
+                        <apex:outputPanel >                      
+                            <apex:actionStatus id="fetchStatus" >
+                                <apex:facet name="start" >
+                                    <img src="/img/loading.gif" />                    
+                                </apex:facet>
+                            </apex:actionStatus>
+                        </apex:outputPanel> 
+                    </apex:panelGrid>  
+                </apex:pageBlockSection>
+            </apex:pageBlock>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

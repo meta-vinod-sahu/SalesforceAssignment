@@ -1,0 +1,35 @@
+<apex:page controller="ManageClassController">
+    <apex:form >
+        <apex:pageBlock id="class_list">
+            <apex:pageBlockSection title="Class Details">
+                <apex:pageBlockTable value="{!Classes}" var="cls">
+                    <apex:column value="{!cls.Name}" />
+                    <apex:column value="{!cls.ClassTeachers__r.Name}" />
+                    <apex:column value="{!cls.MaxSize__c}" />
+                    <apex:column value="{!cls.NumberOfStudents__c }" />
+                    <apex:column >
+                        <apex:commandLink value="edit" action="{!editClasses}" reRender="edit_class_list">
+                            <apex:param name="ClassId" assignTo="{!ClassId}" value="{!cls.Id}" />
+                        </apex:commandLink>
+                    </apex:column>
+                    <apex:column >
+                        <apex:commandLink value="Delete" action="{!deleteClass}" reRender="class_list">
+                            <apex:param name="ClassId" assignTo="{!ClassId}" value="{!cls.Id}" />
+                        </apex:commandLink>
+                    </apex:column>
+                </apex:pageBlockTable>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+        <apex:pageBlock id="edit_class_list">
+            <apex:pageBlockSection rendered="{!render}">
+                <apex:inputField value="{!selectedClass.Name}" label="Name" />
+                <apex:inputField value="{!selectedClass.ClassTeachers__r.Name}" label=" Teacher Name" />
+                <apex:inputField value="{!selectedClass.MaxSize__c}" label="MAx Size Of Class" />
+                <apex:inputField value="{!selectedClass.NumberOfStudents__c}" label="Number Of Students" />
+            </apex:pageBlockSection>
+            <apex:pageBlockButtons location="top" rendered="{!render}">
+                <apex:commandButton value="Save" action="{!updateClass}"/>
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>
