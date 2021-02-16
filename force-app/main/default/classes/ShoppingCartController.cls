@@ -151,9 +151,7 @@ public class ShoppingCartController {
         } 
     }
     
-    public void setPreviousQuantity() {
-        
-    }
+   
     
     public void removeFromCart() {
         

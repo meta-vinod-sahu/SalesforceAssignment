@@ -1,0 +1,35 @@
+<apex:page standardController="Student__c" extensions="RemoteDeleteStudentController" recordSetVar="students">
+    <apex:form >
+        <apex:pageMessage severity="ERROR" summary="No records selected" rendered="{! !Render}" strength="1"/>
+        <apex:pageBlock rendered="{! Render}">
+            Hey , You are going to delete following contacts ..
+            <apex:pageBlockTable value="{!selected}" var="student">
+                <apex:column value="{!student.Name}" />
+            </apex:pageBlockTable>
+            <apex:commandButton value="delete" onclick="deleteStudent();return false;" />
+            <apex:commandButton value="Cancel" action="{!Cancel}" />
+        </apex:pageBlock>
+    </apex:form>
+    <script src="/soap/ajax/45.0/connection.js"></script>
+    <script>
+    	Visualforce.remoting.timeout = 120000 ;
+    	var objIdentify ;
+        function deleteStudent(){
+            var selectedStudents = new Array();
+            <apex:repeat value="{! selected}" var="student">
+            	selectedStudents.push('{!student}');    
+            </apex:repeat>
+            objIdentify = selectedStudents[0].substring(0,3);
+            Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.RemoteDeleteStudentController.deleteStudents}', selectedStudents, handleresult);
+        }
+    
+    	function handleresult(result, event) {
+        	if(event.statusCode == 200) {
+            	alert('Selected students deleted successfully..');
+                location.replace("https://"+'{!BaseUrl}'+".salesforce.com/"+objIdentify);
+            }else {
+            	alert('Failed to delete students');
+            }
+        }
+    </script>
+</apex:page>
