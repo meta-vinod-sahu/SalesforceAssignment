@@ -1,0 +1,3 @@
+<apex:page Controller="PdfGenerateController" renderAs="Pdf" action="{! savePdf}" >
+    
+</apex:page>
