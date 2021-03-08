@@ -1,0 +1,39 @@
+<apex:page >
+    <apex:form id="studentForm">
+        <apex:pageBlock id="pageBlock1">
+            <apex:pageBlockSection id="section1">
+                <apex:inputText label="Enter First Name" id="firstName" required="true" />
+                <apex:inputText label="Enter Last Name" id="lastName" required="true" />
+                <apex:commandButton value="Add" onclick="addStudent();return false;" />
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+    <script src="/soap/ajax/45.0/connection.js"></script>
+    <script>
+        sforce.connection.sessionId = "{!$Api.Session_ID}";
+    function addStudent(){
+        var firstName = document.getElementById('{!$Component.studentForm.pageBlock1.section1.firstName}').value;
+        var lastName = document.getElementById('{!$Component.studentForm.pageBlock1.section1.lastName}').value;
+        if(firstName == '' || lastName == '') {
+            alert("Fill all required fields");
+            return;
+        }
+        var newStudent = new sforce.SObject('Student__c');
+        newStudent.FirstName__c = firstName;
+        newStudent.LastName__c = lastName;
+        newStudent.Class__c = 'a055g0000013CTU';
+        var result = sforce.connection.create([newStudent]);
+        if(result[0].getBoolean("success")) {
+            alert("student added successfully");
+            window.opener.location.href="/{!$CurrentPage.parameters.id}";
+            window.top.close();
+            
+        }
+        else {
+            alert(result[0]);
+            window.location.reload();
+        }  
+    }
+    
+    </script>
+</apex:page>
