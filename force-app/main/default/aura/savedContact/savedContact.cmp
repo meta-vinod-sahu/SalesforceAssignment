@@ -1,0 +1,18 @@
+<aura:component >
+    <aura:attribute name="contact" type="Contact" required = "true"/>
+    <lightning:card  >
+        
+        <p class="slds-p-horizontal--small">
+            Name: {!v.contact.FirstName + ' ' + v.contact.LastName}
+        </p>
+        <p class="slds-p-horizontal--small">
+            Email: {!v.contact.Email}
+        </p>
+        <p class="slds-p-horizontal--small">
+            Phone: {!v.contact.Phone}
+        </p>
+        <p class="slds-p-horizontal--small">
+            Fax: {!v.contact.Fax}
+        </p>
+    </lightning:card>
+</aura:component>
