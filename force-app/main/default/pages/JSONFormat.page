@@ -1,0 +1,3 @@
+<apex:page StandardController="Student__c" extensions="JSONFormatController" action="{!serailize}">
+	<apex:outputText value="{!JSONObjectString}"></apex:outputText>
+</apex:page>
