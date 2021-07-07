@@ -1,0 +1,11 @@
+<apex:page Controller="PdfGenerateController" renderAs="Pdf"  >
+    <apex:sectionHeader title="Student Details"/>
+    <apex:pageBlock >
+        <label>Name:</label>
+        <apex:outputText value="{!Student.Name}"  ></apex:outputText><br/>
+        <label>Class Name:</label>
+        <apex:outputText value="{!Student.class__r.Name}" label="Class Name:" ></apex:outputText><br/>
+        <label>Age:</label>
+        <apex:outputText value="{!Student.Age__c}" label="Age:" ></apex:outputText>
+    </apex:pageBlock>
+</apex:page>
